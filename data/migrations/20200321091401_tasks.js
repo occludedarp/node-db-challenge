@@ -1,7 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema
-  .createTable('tasks', table => {
+  return knex.schema.createTable('tasks', table => {
     table.increments('id');
     table.foreign('Project_id').references('projects.project_id');
     table.string('task_description', 120);
@@ -11,6 +10,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema
-  .dropTableIfExists('tasks');
+  return knex.schema.dropTableIfExists('tasks');
 };
