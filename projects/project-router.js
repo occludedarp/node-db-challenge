@@ -25,6 +25,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+
   const newProject = req.body
   Projects.add(newProject)
     .then(project => {
@@ -34,7 +35,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:id/tasks', (req, res) => {
-  Projects.findById(req.params.id)
+  Projects.findTasks(req.params.id)
     .then(tasks => {
       res.status(200).json(tasks)
     })
@@ -49,20 +50,20 @@ router.post('/:id/tasks', (req, res) => {
     .catch( error => res.status(500).json({"message": "there was an  error creating the tasks"}))
 })
 
-router.get('/resources', (req, res) => {
+router.get('/:id/resources', (req, res) => {
   Projects.findResource(req.params.id)
-    .then(tasks => {
-      res.status(200).json(tasks)
+    .then(resources => {
+      res.status(200).json(resources)
     })
-    .catch( error => res.status(500).json({"message": "there was an error retrieving the tasks"}))
+    .catch( error => res.status(500).json({"message": "there was an error retrieving the resources"}))
 })
 
-router.post('/resources', (req, res) => {
-  Projects.addResource(req.body)
-    .then(task => {
-      res.status(200).json(task)
+router.post('/:id/resources', (req, res) => {
+  Projects.addResource(req.body, req.params.id)
+    .then(resource => {
+      res.status(200).json({"message":"resource was successfully added"})
     })
-    .catch( error => res.status(500).json({"message": "there was an  error creating the tasks"}))
+    .catch( error => res.status(500).json({"message": "there was an  error creating the resource"}))
 })
 
 
