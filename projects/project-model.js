@@ -21,23 +21,23 @@ function find() {
 
 function findById(id) {
   return db('projects')
-  .where({ id })
-  .select()
-}
-
- function addTask(task, id) {
-  return db('tasks')
-    .insert(task, 'id')
     .where({ id })
+    .select()
 }
 
-function findTasks() {
-  return db('tasks').join('projects', 'tasks.project_id', '=', 'projects.id')
+async function addTask(task) {
+  const [taskId] = await db('tasks').insert(task, 'id')
+  return findTaskById(taskId)
+}
 
+function findTasks(id) {
+  return db('tasks')
+    .where({ project_id: id })
+    .select()
 }
 
 function findTaskById(id) {
   return db('tasks')
-  .where({ id })
-  .select()
+    .where({ id })
+    .select()
 }
